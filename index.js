@@ -4,10 +4,12 @@ const fs = require('fs');
 
 const app = express();
 app.set('trust proxy', true);
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3003;
 
 // Load reasons from JSON
 const reasons = JSON.parse(fs.readFileSync('./reasons.json', 'utf-8'));
+const quotes = JSON.parse(fs.readFileSync('./tp_quotes.json', 'utf-8'));
+
 
 // Rate limiter: 120 requests per minute per IP
 const limiter = rateLimit({
@@ -25,6 +27,12 @@ app.use(limiter);
 app.get('/no', (req, res) => {
   const reason = reasons[Math.floor(Math.random() * reasons.length)];
   res.json({ reason });
+});
+
+// Terry Pratchett quotes
+app.get('/tp', (req, res) => {
+  const quote = quotes[Math.floor(Math.random() * quotes.length)];
+  res.json({quote}); 
 });
 
 // Start server
