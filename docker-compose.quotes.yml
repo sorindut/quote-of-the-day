@@ -1,0 +1,7 @@
+services:
+  quotes:
+    image: quote-service:latest
+    container_name: quote-service
+    ports:
+      - 3003:3003
+    restart: unless-stopped
